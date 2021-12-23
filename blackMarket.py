@@ -37,17 +37,17 @@ def randomItems(listOfitems):
         return sample(listOfitems, randint(1,2))
 
 
-def itemPriceQty(item, type):
+def itemPriceQty(item):
     isMagic = randint(1,100)
     magicMod = False
 
-    if type == "armors" and isMagic <=3:
+    if isinstance(item, armor) and isMagic <=3:
         magicMod = 1
 
         itemPrice = str(round((item.price * 2) * uniform(.7,1.10), 2)).split(".")
         displayName = f"+{magicMod} {item.name}"
 
-    elif type == "weapons" and isMagic <= 15:
+    elif isinstance(item, weapon) and isMagic <= 15:
         if isMagic <= 3:
             magicMod = 2
 
@@ -131,20 +131,20 @@ with open(filename, 'w') as output:
 
     output.write("Standard Items\n_______\n")
     for eachItem in sortedStandardItems:
-        output.write(f"{itemPriceQty(eachItem, 'standard')} \n")
+        output.write(f"{itemPriceQty(eachItem)} \n")
 
     output.write("\nWeapons\n_______\n")
     for eachItem in sortedWeapons:
-        output.write(f"{itemPriceQty(eachItem, 'weapons')} \n")
+        output.write(f"{itemPriceQty(eachItem)} \n")
 
     output.write("\nArmors\n_______\n")
     for eachItem in sortedArmors:
-        output.write(f"{itemPriceQty(eachItem, 'armors')} \n")
+        output.write(f"{itemPriceQty(eachItem)} \n")
 
     output.write("\nPotions and Poisons\n_______\n")
     for eachItem in sortedPotions:
-        output.write(f"{itemPriceQty(eachItem, 'potions')} \n")
+        output.write(f"{itemPriceQty(eachItem)} \n")
 
     output.write("\nMagic Items\n_______\n")
     for eachItem in sortedMagicItems:
-        output.write(f"{itemPriceQty(eachItem, 'magic')} \n")
+        output.write(f"{itemPriceQty(eachItem)} \n")
