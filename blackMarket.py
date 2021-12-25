@@ -181,7 +181,7 @@ def randomItems(listOfItems):
     Standard items, weapons and armor use the same fomulas,
     but are seperated in case individual numbers need to be adjusted.
     """
-    availableItems = [] #Needed for items with rarity: magic items and potions
+
     totalItems = len(listOfItems) #Set here to make the formulas look cleaner
 
 #Standard Items
@@ -212,7 +212,9 @@ def randomItems(listOfItems):
 #First creates list of available items, since both types have rarity
     if isinstance(listOfItems[0], potion) or \
         isinstance(listOfItems[0], magicItem):
-                
+        
+        availableItems = [] #Needed for items with rarity: magic items and potions                
+        
         for eachItem in listOfItems:
             if randint(1,100) <= eachItem.rarity:
                 availableItems.append(eachItem)
