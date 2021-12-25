@@ -70,7 +70,7 @@ calculations.
         #the Chultan market, so the magicMod number doesn't actually
         #apply to amor. There is no static price, either, so this price
         #is much more randomized.
-        if magicMod == 2:
+        if magicMod == 1:
             magicItemPrice = uniform(3.8, 6.0)
             blackMarketMod = uniform(.7,1.10)
 
