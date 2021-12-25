@@ -71,11 +71,24 @@ calculations.
         #apply to amor. There is no static price, either, so this price
         #is much more randomized.
         if magicMod == 1:
-            magicItemPrice = uniform(3.8, 6.0)
             blackMarketMod = uniform(.7,1.10)
+            item.name = item.name
 
-            return str(round((item.price * magicItemPrice)
-            * blackMarketMod, 2)).split(".")
+            if item.name in modulePriced.keys(): #First check to see if this +1 armor is priced in ToA
+
+                itemPrice = modulePriced.get(item.name)
+
+                return str(round(item.price * blackMarketMod, 2)).split(".")
+
+            else:
+                magicArmorMod = uniform(2.5, 4) #Gotta add some more variabiltiy to magic armor prices, since it's so rare.
+                magicArmorPrice = item.price * magicArmorMod
+
+                if magicArmorPrice < 1000: #Can't let that +1 light armor be too cheap, now can we
+                    magicArmorPrice = 1000
+
+                return str(round((magicArmorPrice)
+                * blackMarketMod, 2)).split(".")
         
         #For non-magical armor. For now, modifier matches standard items.
         else:
@@ -94,7 +107,13 @@ calculations.
 
         
         elif magicMod == 1:
-            itemPrice = 1000 #In this instance, replaces item.price
+            
+            if item.name in modulePriced.keys(): #First check to see if this +1 weapon is priced in ToA
+                itemPrice = modulePriced.get(item.name)
+
+            else:
+                itemPrice = 1000 #In this instance, replaces item.price
+
             blackMarketMod = uniform(.7,1.50)
 
             return str(round(itemPrice * blackMarketMod, 2)).split(".")
@@ -212,9 +231,8 @@ def randomItems(listOfItems):
 #First creates list of available items, since both types have rarity
     if isinstance(listOfItems[0], potion) or \
         isinstance(listOfItems[0], magicItem):
-        
-        availableItems = [] #Needed for items with rarity: magic items and potions                
-        
+        availableItems = [] #Needed for items with rarity: magic items and potions
+
         for eachItem in listOfItems:
             if randint(1,100) <= eachItem.rarity:
                 availableItems.append(eachItem)
@@ -261,6 +279,14 @@ def getWriteString(item):
 def sortedItemList(listOfItems):
     #Turning sorting items in to a function
     return sorted(randomItems(listOfItems), key = lambda eachItem: eachItem.name)
+
+
+modulePriced = {"Ammunition":50,
+                "Shield, wooden":450,
+                "Dagger":500,
+                "Yklwa":500
+                }
+
 
 sortedStandardItems = sortedItemList(standardItems)
 sortedWeapons = sortedItemList(weapons)
