@@ -71,7 +71,7 @@ calculations.
         #apply to amor. There is no static price, either, so this price
         #is much more randomized.
         if magicMod == 1:
-            blackMarketMod = uniform(.7,1.10
+            blackMarketMod = uniform(.7,1.10)
 
 
             if item.name in modulePriced.keys(): #First check to see if this +1 armor is priced in ToA
